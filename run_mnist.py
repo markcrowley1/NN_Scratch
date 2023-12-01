@@ -8,6 +8,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 def view_data(x):
+    print(x.shape)
     plt.imshow(x, cmap = plt.cm.binary)
     plt.show()
     return
@@ -50,6 +51,11 @@ def main():
     # Test models and print results
     test_loss, test_accuracy = tf_model.evaluate(x_test, y_test)
     print(test_loss, test_accuracy)
+
+    # Use model to get predictions
+    predictions = tf_model.predict(x_test)
+    for i in range(10):
+        print(np.argmax(predictions[i]), y_test[i])
     
 
 if __name__ == "__main__":
