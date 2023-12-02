@@ -14,14 +14,31 @@ def sigmoid_derivative(x):
     """ Derivative of Sigmoid Function"""
     return sigmoid(x) * (1 - sigmoid(x))
 
-def softmax(x):
-    """ Sofmax function for output layer"""
-    pass
+def softmax(x: np.ndarray):
+    """ Softmax function for output layer """
+    # # Values shifted to reduce chance of generating NaN values
+    # x = x - np.max(x)
+    exp_x = np.exp(x)
+    return exp_x / np.sum(exp_x)
 
-def categorical_cross_entropy(x):
+def softmax_derivative(S: np.ndarray):
+    """ Computes Gradient of Softmax Function """
+    # Input S should be the vector output of the Softmax function
+    S_diag = np.diag(S)
+    S_vector = S.reshape(S.shape[0], 1)
+    S_matrix = np.tile(S_vector, S.shape[0])
+
+    # Compute jacobian derivative with matrix maths
+    gradient = S_diag - (S_matrix * np.transpose(S_matrix))
+    return gradient
+
+def categorical_cross_entropy(predicted: np.ndarray, target: np.ndarray):
     """ Categorical Cross Entropy Cost Function"""
-    pass
-
+    losses = []
+    for t, p in zip(target, predicted):
+        loss = -np.sum(t * np.log(p))
+        losses.append(loss)
+    return losses
 
 """ Defining Classes for MLP and Individual Layers """
 class MLP:
