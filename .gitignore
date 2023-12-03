@@ -1,2 +1,3 @@
-.vscode
 cpp
+__pycache__
+.vscode
