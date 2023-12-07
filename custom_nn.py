@@ -106,10 +106,15 @@ class MLP:
                     layer: Layer = self.graph[i]
                     activation_error = layer.activation_function_derivative(layer.pre_activation_values)
                     print(activation_error.shape)
+                    break
                     # error_chain = np.sum()
                     # layer.weight_grad = error_chain.dot()
 
-                # Update weights and biases
+                # # Update weights and biases according to gradients
+                # for i in reversed(range(1, len(self.graph))):
+                #     layer: Layer = self.graph[i]
+                #     layer.update_weights(self.LEARNING_RATE)
+                #     layer.update_biases(self.LEARNING_RATE)
                 break
             # Use categorical cross entropy function to get loss
             loss = categorical_cross_entropy(batch_y_hat, batch_y)
@@ -169,6 +174,14 @@ class Layer:
     def initialise_biases(self):
         """ Initialise bias value for each neuron in layer"""
         self.biases = np.random.rand(self.layer_size)
+
+    def update_weights(self, learning_rate):
+        """ Update existing weights according to gradient """
+        self.weights -= learning_rate * self.weight_grad
+
+    def update_biases(self, learning_rate):
+        """ Update existing biases according to gradient """
+        self.biases -= learning_rate * self.bias_grad
 
     def get_layer_size(self):
         return self.layer_size
