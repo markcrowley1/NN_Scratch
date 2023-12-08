@@ -98,14 +98,15 @@ class MLP:
                 batch_end_index += self.BATCH_SIZE
                 # Feed forward to get predictions
                 batch_y_hat = self.feed_forward(batch_x)
-                cce_grad = cce_derivative(batch_y_hat, batch_y)
-                prev_error = cce_grad
-                print(cce_grad.shape)
+                print(batch_y_hat.shape, batch_y.shape)
+                prev_error: np.ndarray = batch_y_hat - batch_y
                 # Iterate backwards through graph and find gradients
                 for i in reversed(range(1, len(self.graph))):
                     layer: Layer = self.graph[i]
+                    layer.weight_grad = prev_error.dot(self.graph[i-1].activation_values)
+                    layer.bias_grad = prev_error
                     activation_error = layer.activation_function_derivative(layer.pre_activation_values)
-                    print(activation_error.shape)
+                    print(layer.pre_activation_values.shape)
                     break
                     # error_chain = np.sum()
                     # layer.weight_grad = error_chain.dot()
@@ -123,6 +124,7 @@ class MLP:
     def feed_forward(self, x_data: np.ndarray):
         """ Run input through network and return prediction """
         prev_output = x_data.reshape((self.BATCH_SIZE, -1))
+        self.graph[0].activation_values = prev_output
         for i in range(1, len(self.graph)):
             layer: Layer = self.graph[i]
             layer.pre_activation_values = prev_output.dot(layer.weights) + layer.biases
