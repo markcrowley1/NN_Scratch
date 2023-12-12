@@ -1,10 +1,20 @@
-# NN_Scratch
+# Building a Neural Network from Scratch
 
 ## About
 
-Creating Neural Network from scratch for educational purposes.
+*WORK IN PROGRESS*
 
-Building a Multi Layer Perceptron using foundational deep learning concepts and trained to classify MNIST digits.
+This repo is intended as a learning resource for anyone who is new to deep learning and wants to quickly grasp the basic concepts. It contains a set of notebooks that explain and implement a set of networks of varying complexity. Each network is implemented using only vanilla Python and Numpy in an effort to understand how each step of the process works.
+
+Ideally, you should a have a basic knowledge of python in order to understand the code fully, but I've tried to keep it relatively simple. I've also included a list of learning resources that I used to put this project together if you want to do any further reading.
+
+## Requirements
+
+To install the requirements run the following command:
+
+`pip install -r requirements.txt`
+
+The Tensorflow package is included in the requirements.txt file to easily download some of the data we want to train our models on (MNIST), and also to provide a benchmark for the performance of our models. `ipykernel` is package that will allow you to run a Jupyter Notebook in your IDE - I used VS Code for this project.
 
 ## Resources
 
